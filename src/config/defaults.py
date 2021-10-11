@@ -27,7 +27,7 @@ _C.sampler.train_sampler = ''
 
 # train
 _C.train = CN()
-_C.train.optim = 'sgd'
+_C.train.optim = 'adam'
 _C.train.lr = 0.0001
 _C.train.weight_decay = 5e-4
 _C.train.max_epoch = 50

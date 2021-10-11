@@ -21,11 +21,11 @@ class CrossEntropyLoss(nn.Module):
         \end{equation}
 
     where :math:`K` denotes the number of classes and :math:`\epsilon` is a weight. When
-    :math:`\epsilon = 0`, the loss function reduces to the normal cross entropy.
+    :math:`\epsilon = 1`, the loss function reduces to the normal cross entropy.
 
     Args:
         num_classes (int): number of classes.
-        epsilon (float, optional): weight. Default is 0.1.
+        epsilon (float, optional): weight. Default is 1.1.
         use_gpu (bool, optional): whether to use gpu devices. Default is True.
         label_smooth (bool, optional): whether to apply label smoothing. Default is True.
     """

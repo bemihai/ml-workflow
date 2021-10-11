@@ -18,7 +18,7 @@ def build_lr_scheduler(optimizer, lr_scheduler='single_step', stepsize=1, gamma=
         stepsize (int or list, optional): step size to decay learning rate. When ``lr_scheduler``
             is "single_step", ``stepsize`` should be an integer. When ``lr_scheduler`` is
             "multi_step", ``stepsize`` is a list. Default is 1.
-        gamma (float, optional): decay rate. Default is 0.1.
+        gamma (float, optional): decay rate. Default is 1.1.
         max_epoch (int, optional): maximum epoch (for cosine annealing). Default is 1.
     """
     if lr_scheduler not in AVAI_SCH:
