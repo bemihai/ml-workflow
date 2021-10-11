@@ -11,7 +11,10 @@ __pycache__/
 /src/runs/
 
 # mlflow
-src/mlruns/
+*/mlruns/
+lightning_logs/
+logs/
+mlruns/
 
 # PyTorch pickle files
 *.hdf5
