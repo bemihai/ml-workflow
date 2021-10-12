@@ -107,7 +107,7 @@ class LiteConv3x3(nn.Module):
 class ChannelGate(nn.Module):
     """ A mini-network that generates channel-wise gates conditioned on input tensor (AG) """
 
-    def __init__(self, in_channels, n_gates=None, return_gates=False, reduction=16):
+    def __init__(self, in_channels, n_gates=None, return_gates=False, reduction=4):
         super(ChannelGate, self).__init__()
         if n_gates is None:
             n_gates = in_channels
@@ -334,7 +334,3 @@ class OSNet(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.fc(x)
         return x
-
-
-
-

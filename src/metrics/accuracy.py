@@ -1,7 +1,3 @@
-import numpy as np
-import torch
-import torch.nn.functional as F
-
 
 class Metric(object):
     def __init__(self):
@@ -29,6 +25,7 @@ class AccumulatedAccuracy(Metric):
         super(AccumulatedAccuracy, self).__init__()
         self.correct = 0
         self.total = 0
+        self.name = 'acc'
 
     def __call__(self, outputs, target):
         pred = outputs[0].data.max(1, keepdim=True)[1]
@@ -42,7 +39,7 @@ class AccumulatedAccuracy(Metric):
 
     def value(self):
         return 100 * float(self.correct) / self.total
-
-    def name(self):
-        return 'Accuracy'
-
+    
+    @property
+    def get_name(self):
+        return self.name
