@@ -223,7 +223,7 @@ class OSNet(nn.Module):
             layers,                            # nr of osnet blocks at each layer
             channels,                          # nr of output channels at each layer
             feature_dim=512,                   # learned features size
-            **kwargs
+            **kwargs,
     ):
         super(OSNet, self).__init__()
         n_blocks = len(blocks)
@@ -256,23 +256,13 @@ class OSNet(nn.Module):
             reduce_spatial_size=True
         )
 
-        # conv4: osnet bottlenecks, no transition layer (spatial dims are preserved)
-        # paper sizes: (384, 16, 8) -> (512, 16, 8)
-        self.conv4 = self._make_layer(
-            blocks[2],
-            layers[2],
-            channels[2],
-            channels[3],
-            reduce_spatial_size=False
-        )
-
         # conv5: 1x1 conv + average pooling to flatten the output
         # paper sizes: (512, 16, 8) -> (512, 16, 8) -> (512, 1, 1)
-        self.conv5 = Conv1x1(channels[3], channels[3])
+        self.conv5 = Conv1x1(channels[2], channels[2])
         self.global_avgpool = nn.AdaptiveAvgPool2d(1)
 
         # fc: fully connected layer to get features
-        self.fc = self._fc_layer(channels[3])
+        self.fc = self._fc_layer(channels[2])
 
         # initialize learnable parameters
         self._init_params()
@@ -328,7 +318,6 @@ class OSNet(nn.Module):
         x = self.maxpool(x)
         x = self.conv2(x)
         x = self.conv3(x)
-        x = self.conv4(x)
         x = self.conv5(x)
         x = self.global_avgpool(x)
         x = x.view(x.size(0), -1)
