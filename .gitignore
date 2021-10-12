@@ -6,6 +6,9 @@ __pycache__/
 # PyCharm 
 .idea/
 .DS_Store/
+.DS_Store
+
+
 
 # Data
 /data/
