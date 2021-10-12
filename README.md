@@ -52,3 +52,11 @@ To skip the ssl certificate verification, install a new certificate using
 cd "/Applications/Python 3.8/"
 sudo "./Install Certificates.command"
 ```
+
+### Screenshots
+
+![Main Dashboard](resources/page1.png)
+
+![Run Details](resources/page2.png)
+
+![Plots](resources/page3.png)
