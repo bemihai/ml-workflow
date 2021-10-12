@@ -55,8 +55,14 @@ sudo "./Install Certificates.command"
 
 ### Screenshots
 
+#### Main dashboard
+
 ![Main Dashboard](resources/page1.png)
 
+#### Run details
+
 ![Run Details](resources/page2.png)
+
+#### Metrics plot
 
 ![Plots](resources/page3.png)
