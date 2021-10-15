@@ -24,7 +24,7 @@ class OsnetClassifier(pl.LightningModule):
         self.scheduler = None
         self.feature_extractor = OSNet(
             blocks=[OSBlock, OSBlock],
-            layers=[1, 1],
+            layers=[2, 2],
             channels=[16, 32, 64],
             feature_dim=self.cfg.model.feature_dim,
         )

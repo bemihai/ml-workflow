@@ -15,7 +15,7 @@ if __name__ == '__main__':
     parser = ArgumentParser(description="ML Workflow")
     parser.add_argument("--run-name", type=str, default="", help="Run name")
     parser.add_argument("--experiment-id", type=int, default=1, help="Experiment id")
-    parser.add_argument("--tracking-uri", type=str, default="http://localhost:5000/", help="Tracking server URI")
+    parser.add_argument("--tracking-uri", type=str, default="http://localhost:5000/", help="Tracking server")
     parser = pl.Trainer.add_argparse_args(parent_parser=parser)
     args = parser.parse_args()
     dict_args = vars(args)
@@ -27,7 +27,10 @@ if __name__ == '__main__':
     # load config file (default config)
     cfg = get_cfg()
     cfg.data.root = '../data/'
-    cfg.model.feature_dim = 64
+    cfg.model.feature_dim = 128
+    cfg.train.lr = 0.01
+    cfg.train.es.monitor = 'train_acc'
+    cfg.train.es.mode = 'max'
     cfg.test.metrics = [AccumulatedAccuracy()]
     
     # initialize data module and model
@@ -39,7 +42,7 @@ if __name__ == '__main__':
     # define training callbacks
     early_stopping = EarlyStopping(monitor=cfg.train.es.monitor, mode=cfg.train.es.mode,
                                    verbose=cfg.train.es.verbose, patience=cfg.train.es.patience)
-    lr_logger = LearningRateMonitor()
+    lr_logger = LearningRateMonitor(logging_interval='epoch')
     
     # define trainer
     trainer = pl.Trainer.from_argparse_args(

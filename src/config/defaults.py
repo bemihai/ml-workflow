@@ -39,14 +39,14 @@ _C.train.staged_lr = False  # set different lr to different layers
 _C.train.new_layers = []  # newly added layers with default lr
 _C.train.base_lr_mult = 0.1  # learning rate multiplier for base layers
 _C.train.lr_scheduler = 'single_step'
-_C.train.stepsize = [20]  # stepsize to decay learning rate
+_C.train.stepsize = [5]  # stepsize to decay learning rate
 _C.train.gamma = 0.1  # learning rate decay multiplier
 _C.train.seed = 99  # random seed
 _C.train.es = CfgNode()  # early stopping
 _C.train.es.monitor = 'val_loss'  # monitor
 _C.train.es.mode = 'min'  # mode
-_C.train.es.verbose = 'True'  # verbose
-_C.train.es.patience = 3  # patience
+_C.train.es.verbose = 'False'  # verbose
+_C.train.es.patience = 5  # patience
 
 # optimizer
 _C.sgd = CfgNode()
