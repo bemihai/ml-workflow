@@ -12,9 +12,6 @@ class Metric(object):
     def value(self):
         raise NotImplementedError
 
-    def name(self):
-        raise NotImplementedError
-
 
 class AccumulatedAccuracy(Metric):
     """
@@ -39,7 +36,3 @@ class AccumulatedAccuracy(Metric):
 
     def value(self):
         return 100 * float(self.correct) / self.total
-    
-    @property
-    def get_name(self):
-        return self.name

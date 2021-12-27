@@ -3,8 +3,8 @@ name: ml-workflow
 entry_points:
   main:
     parameters:
-      run-name: {type: str, default: "test run"}
-      experiment-id: {type: int, default: 1}
+      run-name: {type: str, default: "demo"}
+      experiment-id: {type: int, default: 0}
       tracking-uri: {type: str, default: "http://localhost:5000/"}
     command: |
       python src/main.py \

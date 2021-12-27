@@ -21,16 +21,16 @@ _C.data.transforms = []  # data transforms
 _C.data.norm_mean = [0.485, 0.456, 0.406]  # default is imagenet mean
 _C.data.norm_std = [0.229, 0.224, 0.225]  # default is imagenet std
 _C.data.split = 0.05  # percent of data to keep for validation
-_C.data.save_dir = 'outputs'  # dir to save outputs
+_C.data.save_dir = 'logs'  # dir to save outputs
 _C.sampler = CfgNode()
 _C.sampler.train_sampler = ''
 
 # train
 _C.train = CfgNode()
 _C.train.optim = 'adam'
-_C.train.lr = 0.0001
+_C.train.lr = 0.001
 _C.train.weight_decay = 5e-4
-_C.train.max_epoch = 50
+_C.train.max_epoch = 10
 _C.train.start_epoch = 0
 _C.train.batch_size = 32
 _C.train.fixbase_epoch = 0  # number of epochs to fix base layers

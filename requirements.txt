@@ -64,7 +64,7 @@ tensorboard==2.6.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
 termcolor==1.1.0
-torch==1.6.0
+torch==1.9.1
 torchmetrics==0.5.1
 torchvision==0.10.1
 tqdm==4.62.3
@@ -75,3 +75,5 @@ Werkzeug==2.0.2
 yacs==0.1.8
 yarl==1.7.0
 zipp==3.6.0
+
+python-dotenv==0.19.2
