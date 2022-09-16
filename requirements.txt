@@ -28,7 +28,7 @@ importlib-metadata==4.8.1
 iopath==0.1.9
 itsdangerous==2.0.1
 Jinja2==3.0.2
-Mako==1.1.5
+Mako==1.2.2
 Markdown==3.3.4
 MarkupSafe==2.0.1
 mlflow==1.20.2
