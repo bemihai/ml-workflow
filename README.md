@@ -35,7 +35,7 @@ Alternatively, experiment name and id can be defined as environment variables:
 To run the code from this example, go to the `ml-workflow` folder and run:
 
 ```bash
-python src/main.py --run-name <RUN NAME> --experiment-id <ID> 
+python src/train.py --run-name <RUN NAME> --experiment-id <ID> 
 ```
 
 ### View results in `mlflow` UI

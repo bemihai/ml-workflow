@@ -38,6 +38,11 @@ class OsnetClassifier(pl.LightningModule):
             use_gpu=self.cfg.model.use_gpu,
             label_smooth=self.cfg.loss.softmax.label_smooth
         )
+        self.val_outputs = {"val_loss": []}
+        self.test_outputs = {}
+        for metric in self.cfg.test.metrics:
+            self.val_outputs[metric.name] = []
+            self.test_outputs[metric.name] = []
 
     def forward(self, x):
         """Forward step."""
@@ -70,7 +75,7 @@ class OsnetClassifier(pl.LightningModule):
             outputs[metric.name] = metric(y_hat, y)
         return outputs
 
-    def training_epoch_end(self, outputs):
+    def on_training_epoch_end(self, outputs):
         """Computes epoch average loss and  metrics for logging."""
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
         self.log('train_loss', avg_loss)
@@ -81,34 +86,30 @@ class OsnetClassifier(pl.LightningModule):
     def validation_step(self, val_batch, batch_idx):
         """Validation step: returns batch validation loss and metrics."""
         x, y = self.parse_inputs(*val_batch)
-        outputs = {}
         y_hat = self.model(*x)
-        outputs['val_loss'] = self.compute_loss(y_hat, y)
+        self.val_outputs["val_loss"].append(self.compute_loss(y_hat, y))
         for metric in self.cfg.test.metrics:
-            outputs[metric.name] = metric(y_hat, y)
-        return outputs
+            self.val_outputs[metric.name].append(metric(y_hat, y))
 
-    def validation_epoch_end(self, outputs):
+    def on_validation_epoch_end(self):
         """Computes epoch average validation loss and metrics for logging."""
-        avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
+        avg_loss = torch.stack(self.val_outputs['val_loss']).mean()
         self.log('val_loss', avg_loss)
         for metric in self.cfg.test.metrics:
-            avg_metric = float(np.mean([x[metric.name] for x in outputs]))
+            avg_metric = float(np.mean(self.val_outputs[metric.name]))
             self.log(f'val_{metric.name}', avg_metric)
 
     def test_step(self, test_batch, batch_idx):
         """Test step: returns model metrics."""
         x, y = self.parse_inputs(*test_batch)
-        outputs = {}
         y_hat = self.model(*x)
         for metric in self.cfg.test.metrics:
-            outputs[metric.name] = metric(y_hat, y)
-        return outputs
+            self.test_outputs[metric.name].append(metric(y_hat, y))
 
-    def test_epoch_end(self, outputs):
+    def on_test_epoch_end(self):
         """Computes epoch average metrics for logging."""
         for metric in self.cfg.test.metrics:
-            avg_metric = float(np.mean([x[metric.name] for x in outputs]))
+            avg_metric = float(np.mean(self.test_outputs[metric.name]))
             self.log(f'test_{metric.name}', avg_metric)
 
     def compute_loss(self, outputs, target):

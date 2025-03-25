@@ -1,4 +1,5 @@
-from torch.utils.data import DataLoader, random_split, IterableDataset
+import torch
+from torch.utils.data import DataLoader, random_split, IterableDataset, Subset
 from torchvision import transforms
 import pytorch_lightning as pl
 
@@ -31,6 +32,10 @@ class CIFARDataModule(pl.LightningDataModule):
                                 train=True,
                                 download=True,
                                 transform=self.transform)
+
+        indices = torch.arange(5000)
+        self.df_train = Subset(self.df_train, indices)
+
         val_size = int(self.cfg.data.split * len(self.df_train))
         train_size = len(self.df_train) - val_size
         self.df_train, self.df_val = random_split(self.df_train, [train_size, val_size])
@@ -43,7 +48,8 @@ class CIFARDataModule(pl.LightningDataModule):
         """Generic function to create a torch DataLoader."""
         shuffle &= not isinstance(df, IterableDataset)
         return DataLoader(df, batch_size=batch_size, shuffle=shuffle, drop_last=True,
-                          num_workers=self.cfg.data.num_workers, pin_memory=self.cfg.data.pin_memory, **kwargs)
+                          num_workers=self.cfg.data.num_workers, pin_memory=self.cfg.data.pin_memory,
+                          persistent_workers=True, **kwargs)
     
     def train_dataloader(self):
         """Train data loader for the given input."""

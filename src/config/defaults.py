@@ -6,7 +6,7 @@ _C = CfgNode()
 # model
 _C.model = CfgNode()
 _C.model.name = ''
-_C.model.feature_dim = 512  # output size for extracted features
+_C.model.feature_dim = 256  # output size for extracted features
 _C.model.pretrained = False  # automatically load pretrained model weights if available
 _C.model.load_weights = ''  # path to pretrained weights
 _C.model.resume = ''  # path to checkpoint for resume training
@@ -15,7 +15,7 @@ _C.model.use_gpu = False
 # data
 _C.data = CfgNode()
 _C.data.root = 'data'
-_C.data.num_workers = 12  # number of data loading workers
+_C.data.num_workers = 8  # number of data loading workers
 _C.data.pin_memory = True
 _C.data.transforms = []  # data transforms
 _C.data.norm_mean = [0.485, 0.456, 0.406]  # default is imagenet mean
@@ -32,7 +32,7 @@ _C.train.lr = 0.001
 _C.train.weight_decay = 5e-4
 _C.train.max_epoch = 10
 _C.train.start_epoch = 0
-_C.train.batch_size = 32
+_C.train.batch_size = 128
 _C.train.fixbase_epoch = 0  # number of epochs to fix base layers
 _C.train.open_layers = []  # layers for training while keeping others frozen
 _C.train.staged_lr = False  # set different lr to different layers

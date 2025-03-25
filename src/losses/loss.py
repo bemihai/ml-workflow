@@ -50,5 +50,7 @@ class CrossEntropyLoss(nn.Module):
         targets = zeros.scatter_(1, targets.unsqueeze(1).data.cpu(), 1)
         if self.use_gpu:
             targets = targets.cuda()
+        else:
+            targets = targets.to("mps")
         targets = (1 - self.epsilon) * targets + self.epsilon / self.num_classes
         return (-targets * log_probs).mean(0).sum()

@@ -19,6 +19,7 @@ __pycache__/
 lightning_logs/
 logs/
 mlruns/
+mlartifacts/
 
 # PyTorch pickle files
 *.hdf5
